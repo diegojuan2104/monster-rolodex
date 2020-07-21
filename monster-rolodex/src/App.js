@@ -1,10 +1,10 @@
 import React , {Component} from 'react';
 import {CardList} from './components/card-list/card-list.component';
+import {SearchBox} from './components/search-box/search-box.component'
 import './App.css';
 import axios from 'axios';
 
 class App extends Component {
-  
   constructor(){
     super();
     this.state = {
@@ -23,16 +23,24 @@ class App extends Component {
     this.setState({ monsters: res.data });
   };
 
+  handleChange(e){
+    {this.setState({searchField:e.target.value}, () =>
+              console.log(this.state)
+            )
+          }
+  }
+
   render(){
+    //Destructuration
+    const { monsters, searchField } = this.state
+    const filteredMonsters = monsters.filter(monster => monster.name.toLowerCase().includes(searchField.toLowerCase()) )
     return (
       <div className="App">
-        <input type = 'search' placeholder='search monsters' onChange={
-          
-          e => {this.setState({searchField:e.target.value}, () =>
-            console.log(this.state)
-          )
-        }}/>
-        <CardList monsters = {this.state.monsters}/> 
+        <SearchBox
+          placeholder = 'search monsters'
+          handleChange = {this.handleChange}
+        ></SearchBox>
+        <CardList monsters = {filteredMonsters}/> 
       </div>
     );
   }
