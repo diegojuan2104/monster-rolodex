@@ -23,7 +23,7 @@ class App extends Component {
     this.setState({ monsters: res.data });
   };
 
-  handleChange(e){
+  handleChange = (e) => {
     {this.setState({searchField:e.target.value}, () =>
               console.log(this.state)
             )
@@ -36,6 +36,7 @@ class App extends Component {
     const filteredMonsters = monsters.filter(monster => monster.name.toLowerCase().includes(searchField.toLowerCase()) )
     return (
       <div className="App">
+        <h1>Monsters Rodolex</h1>
         <SearchBox
           placeholder = 'search monsters'
           handleChange = {this.handleChange}
